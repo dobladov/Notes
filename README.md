@@ -10,6 +10,9 @@ cd Notes
 npm install 
 electron app/main.js
 ```
+## Video in action 
+
+https://vid.me/e/jnG1
 
 ## OS executables
 
