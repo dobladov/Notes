@@ -1,0 +1,61 @@
+<div class="main container-fluid">
+    
+  <nav class="navbar navbar-inverse navbar-static-top">
+
+    <div class="container-fluid">
+
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#/notes">↩</a>
+        <!-- <span class="navbar-brand">Editing Note: {{ note.id }}</span> -->
+      </div>
+
+      <div class="collapse navbar-collapse" id="menu-collapse">
+
+        <div class="navbar-form navbar-right">      
+
+          <button ng-if="!note.id" 
+                  ng-disabled="!note.title || newDisable" 
+                  class="btn btn-success">
+                  <span title="{{newDisable ? 'Saving Data' : 'New'}}"
+                        ng-class="{{newDisable ? 'glyphicon-refresh' : 'glyphicon-ok'}}"
+                        class="glyphicon glyphicon-ok"
+                        ng-click="newNote();">
+                  </span>
+          </button>
+
+          <button ng-if="note.id" ng-disabled="!note.title" class="btn btn-success"><span title="Save" class="glyphicon glyphicon-ok" ng-click="updateNote();" ></span></button>
+
+          <a href="{{back}}">
+            <button class="btn btn-danger"><span title="Cancell" class="glyphicon glyphicon-remove"></span></button>
+          </a>
+
+        </div>         
+
+      </div> <!-- Collapse -->
+
+    </div> <!-- Container fluid -->
+
+  </nav> <!-- End TitleBar -->
+
+
+  <!-- Content -->
+
+  <div class="container">
+
+    <div class="form-group center-block">
+             
+      <input required class="form-control" type="text" ng-model="note.title" placeholder="Note Title" >
+      <br>
+      <textarea class="form-control" ng-model="note.content" rows="10" placeholder="Note Content"></textarea>
+      
+    </div>
+
+  </div>
+
+</div>

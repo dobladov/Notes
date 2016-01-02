@@ -1,0 +1,96 @@
+body {
+	word-wrap: break-word;
+	background-color: #F5F5F5;
+	transition: background-color 1s;
+}
+
+.main {
+	padding: 0;
+	padding-bottom: 20px;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.navbar-inverse {
+	background-color: #3F3E39;
+}
+
+/*Notes*/
+.note {
+	box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+	background-color: #EAC523;
+	color: black;
+	min-height: 150px;
+	transition: box-shadow 0.3s;
+	height: 230px;
+	overflow: hidden;
+	margin-top: 10px;
+}
+
+.note h2 {
+	margin: 0;
+	padding: 8px;
+	overflow: hidden;
+}
+
+.note p {
+	padding: 10px 10px 12px 10px;
+}
+
+.note:hover  {
+	box-shadow: 0px 0px 10px 4px rgba(0, 0, 0, 0.68);
+}
+
+.corner {
+	position: fixed;
+	bottom: 5px;
+	right: 5px;
+}
+
+/*Edit Note*/
+textarea {
+	resize: vertical;
+	width: 100%;
+}
+
+
+.vCenter {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+@media(min-width:767px){
+
+	.note {
+		height: 200px;
+	}
+
+}
+
+@media(max-width:767px){
+
+
+	.note {
+		height: auto;
+	}
+
+	.buttons {
+		padding-top: 5px;
+		display: inline-block;
+	}
+}
+
+/*
+/*@media(min-width:992px){}
+/*@media(min-width:1200px){}*/
+
+
+.invert {
+	-moz-transform: scaleY(-1);
+    -o-transform: scaleY(-1);
+    -webkit-transform: scaleY(-1);
+    transform: scaleY(-1);
+}

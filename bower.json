@@ -1,0 +1,21 @@
+{
+  "name": "notes",
+  "description": "A simple Note App",
+  "main": "app/main.js",
+  "license": "ISC",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "https://github/dobladov",
+  "private": true,
+  "dependencies": {
+    "angular-resource": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "angular": "~1.4.8",
+    "foundation-sites": "~6.1.1",
+    "foundation-icon-fonts": "*",
+    "bootstrap": "~3.3.6",
+    "jquery": "~2.1.4",
+    "angular-markdown-directive": "~0.3.1"
+  }
+}

@@ -1,0 +1,65 @@
+<div class="main container-fluid">
+    
+  <nav class="navbar navbar-inverse navbar-static-top">
+
+    <div class="container-fluid">
+
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#/notes">↩</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="menu-collapse">
+
+        <div class="navbar-form navbar-right">
+
+          <select ng-show="categories.length > 1" class="form-control" ng-change="changeCategory();" ng-model="category" ng-options="cat.name disable when cat.id == 'null' for cat in categories"></select>
+
+          <span class="buttons">
+            
+            <button ng-if="!note.archived" ng-click="archiveNote();" class="btn btn-default"><span tittle="Archive Note" class="glyphicon glyphicon-inbox"></span></button>
+
+            <button ng-if="note.archived" ng-click="unarchiveNote();" class="btn btn-default"><span tittle="Unarchive Note" class="glyphicon glyphicon-share"></span></button>
+
+            <a href="#/note/edit/{{note.id}}"><button class="btn btn-success"><span title="Edit Note" class="glyphicon glyphicon-edit"></span></button></a>
+
+            <button ng-if="!note.deleted" ng-click="deleteNote();" class="btn btn-warning"><span tittle="Send to Trash" class="glyphicon glyphicon-trash"></span></button>
+            
+            <button ng-if="note.deleted" ng-click="restoreNote();" class="btn btn-success"><span title="Restore Note" class="glyphicon glyphicon-repeat"></span></button>
+
+            <button ng-if="note.deleted" ng-click="permanentDeleteNote();" class="btn btn-danger"><span title="Permanent Delete" class="glyphicon glyphicon-remove"></span></button>
+
+          </span>
+
+        </div>  
+
+      </div> <!-- Collapse -->
+
+    </div> <!-- Container fluid -->
+
+  </nav> <!-- End TitleBar -->
+
+  <!-- Content -->
+
+  <div id="noteDetail" class="container">
+
+  <input type="color" id="colorSelector" class="corner" ng-model-options='{ debounce: 500 }' ng-change="changeColor();"  ng-model="note.color">
+ 
+    <div class="center-block">
+        <div class="text-right">
+          <small title="{{toJsDate(note.date) | date:'h:mm:ss a'}}">{{ toJsDate(note.date) | date:"EEEE, MMMM, yyyy"}}</small>   
+        </div>
+        <h2>{{note.title}}</h2>
+        <div btf-markdown="note.content">
+        
+        </div>
+    </div>
+
+  </div>
+
+</div>

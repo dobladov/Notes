@@ -1,0 +1,184 @@
+<div class="main container-fluid">
+		
+	<nav class="navbar navbar-inverse navbar-static-top">
+
+		<div class="container-fluid">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu-collapse" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Notes</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="menu-collapse">
+
+				<ul class="nav navbar-nav">
+
+					<li class="dropdown">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button">{{category.name}} <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+
+							<li>
+								<select class="form-control" ng-change="categorySelected()" ng-disabled="cat.id == 'null'" ng-model="category" ng-options="cat.name disable when cat.id == 'null' for cat in categories"></select>
+							</li>
+							
+							<li role="separator" class="divider"></li>
+							<li ng-if="category.id > 0"><a title="Rename Category" data-toggle="modal" data-target="#renameCategory" ><span class="glyphicon glyphicon-pencil"></span> Rename</a></li>
+							<li ng-if="category.id > 0"><a title="Delete Category" data-toggle="modal" data-target="#deleteCategory" ><span class="glyphicon glyphicon-trash"></span> Delete</a></li>
+							
+							<li ng-if="category.id > 0" role="separator" class="divider"></li>
+
+							<li><a title="Add Category" data-toggle="modal" data-target="#addCategory" ><span class="glyphicon glyphicon-plus"></span> New</a></li>
+
+						</ul>
+					</li>
+
+				</ul>
+
+				<div class="navbar-form navbar-right">
+					
+					<div class="form-group">
+					<input type="text"  ng-model="search" class="form-control" placeholder="Search">
+					</div>
+
+					<button class="btn btn-default"
+							ng-click="orderType=='title' ? orderType='date' : orderType='title'" 
+							title="Sorted by {{ orderType=='title' ? 'Title' : 'Date' }}">
+							<span ng-class="orderType=='title' ? 'glyphicon-font' : 'glyphicon-time'" class="glyphicon glyphicon-time"></span>
+					</button>
+
+					<button class="btn btn-default"
+							ng-click="order=='+' ? order='-' : order='+'"
+							title="Order {{ order=='+' ? 'ascendent' : 'descendent' }}">
+							<span ng-class="{ 'invert': order=='+' }"  class="glyphicon glyphicon-sort-by-attributes "></span>
+					</button>
+
+					<a href="#/note/new/{{category.id}}">
+						<button class="btn btn-success"><span title="Add Note" class="glyphicon glyphicon-plus"></span></button>
+					</a>      
+
+				</div>	
+
+
+
+			</div> <!-- Collapse -->
+
+		</div> <!-- Container fluid -->
+
+	</nav> <!-- End TitleBar -->
+	
+	<div class="content container" >
+
+	<div class="row">
+
+
+		<div class="text-center" ng-if="notes.length == 0">
+
+			<div ng-show="category.id == -1">
+				
+				<h1>Tras is empty</h1>
+				<h1 title="Add Note" class="glyphicon glyphicon-trash"></h1>
+
+			</div>
+
+			<div ng-show="category.id == -2">
+				
+				<h1>No archived notes</h1>
+				<h1 title="Add Note" class="glyphicon glyphicon-folder-open"></h1>
+
+			</div>
+			
+
+			<div ng-show="category.id >= 0">
+				
+				<h1>No notes were found</h1>
+
+				<br>
+
+				<h3 class="text-muted">Add a new one</h3>
+				
+				<a href="#/note/new/{{category.id}}">
+					<button class="btn btn-success"><span title="Add Note" class="glyphicon glyphicon-plus"></span></button>
+				</a>
+
+			</div>
+
+		</div>
+
+		<div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="note in notes | filter:search | orderBy: (order+orderType)">
+			<a href="#/note/{{note.id}}">
+			<div style="background-color: {{ note.color }}"  class="note">
+				<h2 style="background-color: {{ note.color | colorLight }}">{{note.title}}</h2>
+				<!-- <p btf-markdown="note.content  | limitTo: 50">{{note.content | limitTo: 150}}{{note.content.length > 150 ? '...' : ''}}</p> -->
+				<p btf-markdown="note.content | limitTo: 50">{{note.content | limitTo: 150}}{{note.content.length > 150 ? '...' : ''}}</p>
+			</div>
+			</a>
+		</div>
+		
+		<span title="App by @dobladov" ng-if="notes.length" class="badge corner">{{notes.length}}</span> 
+	
+	</div>
+
+</div>
+
+
+<!-- Modal Add Category -->
+<div class="modal fade" id="addCategory" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">New Category</h4>
+      </div>
+      <div class="modal-body">
+        <input ng-model="newCategoryData.name" class="form-control" placeholder="Category Name" type="text">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button ng-disabled="!newCategoryData.name" ng-click="newCategory();" type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Rename Category -->
+<div class="modal fade" id="renameCategory" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Rename Category</h4>
+      </div>
+      <div class="modal-body">
+        <input class="form-control" placeholder="Category Name" type="text" ng-model="newName" value="{{category.name}}">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button ng-click="updateCategory();" type="button" ng-disabled="!newName" class="btn btn-success" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal delete -->
+<div class="modal fade" id="deleteCategory" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete Category</h4>
+      </div>
+      <div class="modal-body">
+        All notes in "{{category.name}}" will be uncategorized.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button ng-click="deleteCategory();" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
